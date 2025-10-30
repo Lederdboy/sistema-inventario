@@ -1,6 +1,10 @@
 import mysql from "mysql2/promise";
-import dotenv from "dotenv";
-dotenv.config();
+
+// Solo cargar dotenv en desarrollo local
+if (process.env.NODE_ENV !== 'production') {
+  const dotenv = await import('dotenv');
+  dotenv.config();
+}
 
 // 🔧 LOGS DE DEBUG - Ver qué variables llegan desde Railway
 console.log('═══════════════════════════════════════');
@@ -13,12 +17,6 @@ console.log('DB_PASSWORD:', process.env.DB_PASSWORD ? '✅ ***' : '❌ NO DEFINI
 console.log('DB_NAME:', process.env.DB_NAME || '❌ NO DEFINIDA');
 console.log('NODE_ENV:', process.env.NODE_ENV);
 console.log('═══════════════════════════════════════');
-
-// Intentar usar MYSQL_URL si existe (Railway a veces usa esto)
-if (process.env.MYSQL_URL) {
-  console.log('✅ MYSQL_URL encontrada, intentando parsear...');
-  console.log('MYSQL_URL:', process.env.MYSQL_URL.replace(/:[^:@]*@/, ':***@')); // Ocultar password
-}
 
 export const pool = mysql.createPool({
   host: process.env.DB_HOST || "localhost",
