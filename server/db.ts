@@ -1,22 +1,11 @@
 import mysql from "mysql2/promise";
 
-// Solo cargar dotenv en desarrollo local
-if (process.env.NODE_ENV !== 'production') {
-  const dotenv = await import('dotenv');
-  dotenv.config();
-}
-
-// 🔧 LOGS DE DEBUG - Ver qué variables llegan desde Railway
-console.log('═══════════════════════════════════════');
-console.log('🔧 DEBUG: Variables de entorno MySQL');
-console.log('═══════════════════════════════════════');
-console.log('DB_HOST:', process.env.DB_HOST || '❌ NO DEFINIDA');
-console.log('DB_PORT:', process.env.DB_PORT || '❌ NO DEFINIDA');
-console.log('DB_USER:', process.env.DB_USER || '❌ NO DEFINIDA');
-console.log('DB_PASSWORD:', process.env.DB_PASSWORD ? '✅ ***' : '❌ NO DEFINIDA');
-console.log('DB_NAME:', process.env.DB_NAME || '❌ NO DEFINIDA');
-console.log('NODE_ENV:', process.env.NODE_ENV);
-console.log('═══════════════════════════════════════');
+console.log('🔧 Configurando conexión MySQL...');
+console.log('   Host:', process.env.DB_HOST);
+console.log('   Port:', process.env.DB_PORT);
+console.log('   User:', process.env.DB_USER);
+console.log('   Database:', process.env.DB_NAME);
+console.log('   Password:', process.env.DB_PASSWORD ? '✅ Configurada' : '❌ No configurada');
 
 export const pool = mysql.createPool({
   host: process.env.DB_HOST || "localhost",
@@ -30,14 +19,13 @@ export const pool = mysql.createPool({
   timezone: "+00:00"
 });
 
-// Test de conexión con más detalles
+// Test de conexión
 pool.getConnection()
   .then(connection => {
     console.log('═══════════════════════════════════════');
     console.log('✅ MySQL conectado exitosamente');
     console.log('   Base de datos:', process.env.DB_NAME);
     console.log('   Host:', process.env.DB_HOST);
-    console.log('   Puerto:', process.env.DB_PORT);
     console.log('═══════════════════════════════════════');
     connection.release();
   })
@@ -46,7 +34,5 @@ pool.getConnection()
     console.error('❌ Error de conexión a MySQL');
     console.error('   Código:', err.code);
     console.error('   Mensaje:', err.message);
-    console.error('   Host intentado:', process.env.DB_HOST || 'localhost');
-    console.error('   Puerto intentado:', process.env.DB_PORT || '3307');
     console.error('═══════════════════════════════════════');
   });
