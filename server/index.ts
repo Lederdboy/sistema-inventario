@@ -1,9 +1,11 @@
 import express from "express";
 import cors from "cors";
-import dotenv from "dotenv";
 
-// Cargar variables de entorno
-dotenv.config();
+// Solo cargar dotenv en desarrollo local
+if (process.env.NODE_ENV !== 'production') {
+  const dotenv = await import('dotenv');
+  dotenv.config();
+}
 
 const app = express();
 
