@@ -1,6 +1,12 @@
 import mysql from "mysql2/promise";
 
 console.log('🔧 Configurando conexión MySQL...');
+console.log('🔍 MYSQL_URL existe?:', process.env.MYSQL_URL ? 'SÍ' : 'NO');
+if (process.env.MYSQL_URL) {
+  console.log('🔍 MYSQL_URL (primeros 40 chars):', process.env.MYSQL_URL.substring(0, 40) + '...');
+}
+
+console.log('🔧 Configurando conexión MySQL...');
 
 let pool;
 
