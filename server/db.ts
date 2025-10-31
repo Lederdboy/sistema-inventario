@@ -54,7 +54,7 @@ if (!pool) {
     port: parseInt(process.env.DB_PORT || "3307"), 
     user: process.env.DB_USER || "root",
     password: process.env.DB_PASSWORD || "",
-    database: process.env.DB_NAME || "Inventario",
+    database: process.env.DB_NAME || "inventario",
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0,
