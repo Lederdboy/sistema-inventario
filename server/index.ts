@@ -7,6 +7,18 @@ if (process.env.NODE_ENV !== 'production') {
   dotenv.config();
 }
 
+// 🔍 DEBUG: Ver TODAS las variables de entorno disponibles
+console.log('═══════════════════════════════════════════════');
+console.log('🔍 TODAS LAS VARIABLES DE ENTORNO:');
+console.log('═══════════════════════════════════════════════');
+Object.keys(process.env).sort().forEach(key => {
+  const value = process.env[key];
+  if (key.includes('MYSQL') || key.includes('DB') || key.includes('DATABASE')) {
+    console.log(`${key}:`, value);
+  }
+});
+console.log('═══════════════════════════════════════════════');
+
 const app = express();
 
 // ============================================
